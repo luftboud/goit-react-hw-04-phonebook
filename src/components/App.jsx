@@ -11,62 +11,44 @@ const App = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  let contactsArr = [];
-  const handleChange = evt => {
-    const { name } = evt.target;
-    const value = evt.target.value;
+  const handleChange = (name, value) => {
     if (name == "name") {
       setName(value)
     }
     if (name == "number") {
       setNumber(value)
     }
-    console.log('handleChange');
   };
-  const handleSubmit = evt => {
-    evt.preventDefault();
-    const isAdded = contactsArr.find(el => el.name === name);
-    if (isAdded === undefined) {
-      if (name === '' || number === '') {
-        window.alert('Please, fill all fields.');
-      } else {
-        contactsArr.push({
-          name: name,
-          number: number,
-          id: nanoid(),
-        });
-        // console.log(contactsArr);
-        setContacts(contactsArr)
-        evt.currentTarget.reset();
-      }
-    } else {
+  const handleSubmit = (contName, phNumber) => {
+    const isAdded = contacts.find(el => el.name === name);
+    if (isAdded !== undefined) {
       window.alert(
-        `Contact "${name}" is already in your phonebook. Please, try something else!`
+        `Contact "${contName}" is already in your phonebook. Please, try something else!`
       );
+      return
+    } 
+    if (contName === '' || phNumber === '') {
+      window.alert('Please, fill all fields.');
+      return
     }
-    console.log("handleSubmit");
+    setContacts([...contacts, {name: contName, number: phNumber}])
   };
   const handleSearch = evt => {
     const value = evt.target.value;
     setFilter(value)
-    console.log('handleSearch');
   };
-  const handleDelete = evt => {
-    const { id } = evt.target;
-    const index = contacts.findIndex(el => el.id === id);
-    contactsArr.splice(index, 1);
-    setContacts(contactsArr)
-    console.log('handleDelete');
+  const handleDelete = i => {
+    const arr = contacts.filter(el => el.id !== i);
+    setContacts(arr)
   };
   const filterContacts = () => {
     if (filter === '') {
-      contactsArr = contacts;
-    } else {
-      const filtredArr = contacts.filter(el =>
-        el.name.toLowerCase().includes(filter)
-      );
-      contactsArr = filtredArr;
-    }
+      return
+    } 
+    // console.log(contacts.filter(el =>
+    //      el.name.toLowerCase().includes(filter.toLowerCase())));
+  //  ???
+    
   };
     return (
       <div className={css.app}>
@@ -74,11 +56,13 @@ const App = () => {
         <ContactForm
           onSubmit={handleSubmit}
           onChange={handleChange}
+          contName={name}
+          phNumber={number}
         />
         <h2>Contacts</h2>
-        {filterContacts()}
+        {filterContacts()} 
         <Filter onChange={handleSearch} />
-        <ContactList contacts={contactsArr} onDelete={handleDelete} />
+        <ContactList contacts={contacts} onDelete={handleDelete} />
       </div>
     );
   }
