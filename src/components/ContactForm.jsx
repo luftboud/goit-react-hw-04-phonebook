@@ -1,13 +1,21 @@
 import PropTypes from 'prop-types';
-const ContactForm = ({ onSubmit, onChange, contName, phNumber }) => {
+import  { useState } from 'react';
+const ContactForm = ({ onSubmit }) => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+
    const handleChange = evt => {
     const { name } = evt.target;
-    const value = evt.target.value;
-    onChange(name, value)
-    // console.log('handleChange');
+     const value = evt.target.value;
+     if (name === "name") {
+      setName(value)
+    }
+    if (name === "number") {
+      setNumber(value)
+    }
   };
   return (
-    <form onSubmit={(e)=>{e.preventDefault(); onSubmit(contName, phNumber)}}>
+    <form onSubmit={(e)=>{e.preventDefault(); onSubmit(name, number)}}>
       <h3>Name</h3>
       <input
         type="text"
@@ -25,6 +33,5 @@ const ContactForm = ({ onSubmit, onChange, contName, phNumber }) => {
 };
 ContactForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
 };
 export { ContactForm };
