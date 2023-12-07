@@ -15,7 +15,7 @@ const ContactForm = ({ onSubmit }) => {
     }
   };
   return (
-    <form onSubmit={(e)=>{e.preventDefault(); onSubmit(name, number)}}>
+    <form onSubmit={(e) => { e.preventDefault(); onSubmit(name, number);  e.target.reset()}}>
       <h3>Name</h3>
       <input
         type="text"
