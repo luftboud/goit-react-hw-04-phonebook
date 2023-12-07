@@ -41,7 +41,6 @@ const App = () => {
     console.log("mounted.");
     const localContacts = localStorage.getItem('contacts');
     const localContactsParsed = JSON.parse(localContacts);
-    console.log(localContactsParsed.length);
     if (localContactsParsed.length === 0 || localContactsParsed === null) {
       console.log("no contacts saved.");
       return
@@ -67,16 +66,5 @@ const App = () => {
       </div>
     );
   }
-  // componentDidMount() {
-  //   const localContacts = localStorage.getItem('contacties');
-  //   const localContactsParsed = JSON.parse(localContacts);
-  //   if (localContactsParsed == null) {
-  //     return
-  //   } else {
-  //     this.setState({ contacts: localContactsParsed })
-  //   }
-  // }
-  // componentDidUpdate() {
-  //   localStorage.setItem('contacties', JSON.stringify(this.state.contacts));
-  // }
+
 export { App };
