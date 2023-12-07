@@ -41,6 +41,10 @@ const App = () => {
     console.log("mounted.");
     const localContacts = localStorage.getItem('contacts');
     const localContactsParsed = JSON.parse(localContacts);
+    if (localContactsParsed === null) {
+      console.log("no contacts parsed :( ");
+      return
+    }
     if (localContactsParsed.length === 0 || localContactsParsed === null) {
       console.log("no contacts saved.");
       return
